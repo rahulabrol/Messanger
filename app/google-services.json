@@ -42,6 +42,13 @@
             {
               "client_id": "1081067851445-4g3ut1luucvn890rjuaid7tijbdt5src.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1081067851445-ecioa1166m2p2cccfeb488o9ik2cub6f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.clicklabs.messenger"
+              }
             }
           ]
         },

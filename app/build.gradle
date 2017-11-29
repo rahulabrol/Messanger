@@ -56,6 +56,7 @@ dependencies {
     implementation "com.android.support:animated-vector-drawable:$rootProject.supportLibraryVersion"
     implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
     //Firebase libraries.
+    implementation "com.google.firebase:firebase-messaging:$rootProject.firebaseLibraryVersion"
     implementation "com.google.firebase:firebase-database:$rootProject.firebaseLibraryVersion"
     implementation "com.google.firebase:firebase-auth:$rootProject.firebaseLibraryVersion"
     implementation "com.google.firebase:firebase-core:$rootProject.firebaseLibraryVersion"
@@ -73,3 +74,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
 }
+
+apply plugin: 'com.google.gms.google-services'

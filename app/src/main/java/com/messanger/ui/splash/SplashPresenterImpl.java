@@ -2,6 +2,8 @@ package com.messanger.ui.splash;
 
 import android.os.Handler;
 
+import com.messanger.database.LocalDatabaseManager;
+
 /**
  * Created by Rahul Abrol on 11/24/17.
  * <p>
@@ -29,7 +31,8 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
     }
 
     @Override
-    public void haltScreen(int milliSec) {
+    public void haltScreen(final int milliSec, final String userName, final String password,
+                           final LocalDatabaseManager localDbManager) {
         // handler to hold the screen to
         // show banding of the product.
         new Handler().postDelayed(new Runnable() {
@@ -38,26 +41,34 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
                 if (view != null) {
                     view.showLoading();
                 }
-                splashInteractor.login("rahulabrol2211@gmail.com",
-                        "123456789", SplashPresenterImpl.this);
+                splashInteractor.login(localDbManager, userName,
+                        password, SplashPresenterImpl.this);
             }
         }, milliSec);
     }
 
-    //    @Override
-//    public void onTaskResult(final Task<AuthResult> resultTask, OnCompleteListener<AuthResult> listener) {
-//        if (view != null) {
-//            view.getFirebaseTaskResult(resultTask, listener);
-//        }
-//    }
+    @Override
+    public void createUser(String email, String name, LocalDatabaseManager localDbManager) {
+        splashInteractor.createUser(localDbManager, email, name, SplashPresenterImpl.this);
+    }
 
     @Override
-    public void onError() {
+    public void onError(final String error) {
+        if (view == null) {
+            return;
+        }
+        view.hideLoading();
+        view.showError(error);
 
     }
 
     @Override
     public void onSuccess() {
+        if (view == null) {
+            return;
+        }
+        view.hideLoading();
+        view.switchToLogin();
 
     }
 }

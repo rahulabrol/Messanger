@@ -12,7 +12,7 @@ public interface MvpPresenter<V extends MvpView> {
 
     void hideLoading();
 
-//    void showError();
+    void showError(String error);
 
 
 //    void onAttach(V mvpView);

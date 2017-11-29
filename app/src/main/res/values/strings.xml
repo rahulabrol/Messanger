@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Messanger</string>
+    <string name="sign_up">SIgn Up</string>
+    <string name="login">login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 </resources>

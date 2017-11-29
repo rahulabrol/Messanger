@@ -2,6 +2,7 @@ package com.messanger.ui.splash;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.messanger.database.FirebaseManager;
+import com.messanger.database.LocalDatabaseManager;
 
 /**
  * Created by Rahul Abrol on 11/27/17.
@@ -14,7 +15,6 @@ import com.messanger.database.FirebaseManager;
 public class SplashInteractorImpl implements SplashInteractor {
 
     private final FirebaseManager firebaseManager;
-//    private FirebaseAuth auth;
 
     /**
      * constructor of model class.
@@ -24,24 +24,33 @@ public class SplashInteractorImpl implements SplashInteractor {
     }
 
     @Override
-    public void login(String username, String password, OnLoginFinishedListener listener) {
+    public void login(final LocalDatabaseManager localDbManager, final String username, final String password, final OnLoginFinishedListener listener) {
         if (firebaseManager != null) {
-            // initialize the firebase authorization.
+            // Initialize the firebase authorization.
             firebaseManager.getFirebaseAuth();
             // Check the user is exists.
             FirebaseUser user = firebaseManager.getUser();
+            // Initialize local database here to save all the users locally if exists.
+            firebaseManager.setLocalDb(localDbManager);
+            //initialize firebase db here.
+            firebaseManager.getFirebaseDatabaseInstance();
+
             if (user != null) {
                 String userId = user.getUid();
                 //set userId in paperDB
                 //CommonData.setId(userId);
                 //get data from remote database here.
-
+                firebaseManager.getRemoteData(listener);
             } else {
                 // signIn if user already exists in firebase db.
-                firebaseManager.signIn(username, password);
+                firebaseManager.signIn(username, password, listener);
+
             }
-
-
         }
+    }
+
+    @Override
+    public void createUser(LocalDatabaseManager localDbManager, String email, String name, OnLoginFinishedListener listener) {
+
     }
 }

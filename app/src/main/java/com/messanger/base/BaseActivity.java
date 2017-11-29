@@ -1,26 +1,9 @@
 package com.messanger.base;
 
-import android.annotation.TargetApi;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.messanger.R;
 import com.messanger.utils.AppConstant;
-import com.messanger.utils.NetworkUtils;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Rahul Abrol on 11/24/17.
@@ -29,10 +12,12 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * class which is used to extand all tha common functionality
  * which are used almost in every Activity.
  */
-public abstract class BaseActivity extends AppCompatActivity implements MvpView, AppConstant {
+public abstract class BaseActivity extends AppCompatActivity implements MvpView, AppConstant, View.OnClickListener {
+    @Override
+    public void onClick(final View view) {
 
-
-//    private ProgressDialog mProgressDialog;
+    }
+    //    private ProgressDialog mProgressDialog;
 //
 //    @Override
 //    protected void onCreate(@Nullable final Bundle savedInstanceState) {

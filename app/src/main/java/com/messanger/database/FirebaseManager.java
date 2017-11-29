@@ -13,6 +13,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.messanger.datamodel.User;
+import com.messanger.ui.splash.SplashInteractor;
 
 import static com.messanger.utils.AppConstant.TABLE_USERS;
 
@@ -29,30 +31,33 @@ public final class FirebaseManager {
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
     private boolean isSignIn;
+    private LocalDatabaseManager localDbManager;
+    private SplashInteractor.OnLoginFinishedListener notifyListner;
     private OnCompleteListener<AuthResult> listener = new OnCompleteListener<AuthResult>() {
         @Override
-        public void onComplete(@NonNull Task<AuthResult> task) {
+        public void onComplete(@NonNull final Task<AuthResult> task) {
             if (task.isSuccessful()) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    //initialize firebase db here.
-                    getFirebaseDatabaseInstance();
 //                    PaperDb.setId(user.getUid());
                     // if true then existing user else new user.
                     if (isSignIn) {
-                        Log.d(TAG, "onComplete: --------UID------->" + user.getUid());
                         getRemoteData();
                     } else {
-                        Log.d(TAG, "onComplete: --------UID------->" + user.getUid());
 //                    fbDatabase()
+                        if (notifyListner != null) {
+                            notifyListner.onSuccess();
+                        }
                     }
                 }
             } else {
-                Log.e(TAG, "onComplete: -------ERROR-->" + task.getException());
+                Log.e(TAG, "onComplete: -------ERROR-->" + task.getException().getMessage());
+                if (notifyListner != null) {
+                    notifyListner.onError(task.getException().getMessage());
+                }
             }
         }
     };
-
 
     /**
      * private constructor cannot.
@@ -71,22 +76,35 @@ public final class FirebaseManager {
 
     /**
      * Method used to get remote data and update local database.
+     *
+     * @param listener used for send status back.
+     */
+    public void getRemoteData(final SplashInteractor.OnLoginFinishedListener listener) {
+        this.notifyListner = listener;
+        getRemoteData();
+    }
+
+    /**
+     * Method used to get the refrence of firebase
+     * remote table and set data into the local db.
      */
     private void getRemoteData() {
         DatabaseReference ref = firebaseDatabase.getReference(TABLE_USERS);
-
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null) {
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         if (data != null) {
-//                            Log.e(TAG, CommonData.getId() + " <<------->> " + data.getKey());
+                            Log.e(TAG, data.getValue() + " <<------->> " + data.getKey());
                             // this is not a current loggedIn user Id then true else false.
-//                            if (!CommonData.getId().equals(data.getKey())) {
-//                                localHelper.addUsers(data.getValue(User.class));
+//                            if (!CommonData.getId().equals(data.getKey()) && localDbManager != null) {
+                            localDbManager.addUsers(data.getValue(User.class));
 //                            }
                         }
+                    }
+                    if (notifyListner != null) {
+                        notifyListner.onSuccess();
                     }
                 }
             }
@@ -114,9 +132,7 @@ public final class FirebaseManager {
      * Database to access all the tables.
      */
     public void getFirebaseDatabaseInstance() {
-        // @return instance of {@link FirebaseAuth}.
         firebaseDatabase = FirebaseDatabase.getInstance();
-//        return firebaseAuth;
     }
 
     /**
@@ -133,12 +149,15 @@ public final class FirebaseManager {
      * Method used to signIn into the firebase with email and
      * password if user already exists.
      *
-     * @param userName unique username of the user
-     * @param password password of the entered user.
+     * @param userName       unique username of the user
+     * @param password       password of the entered user.
+     * @param finishListener listener to send status back to presenter.
      */
-    public void signIn(final String userName, final String password) {
+    public void signIn(final String userName, final String password,
+                       final SplashInteractor.OnLoginFinishedListener finishListener) {
         // @return @{@link Task<AuthResult>} to call {@link com.google.android.gms.tasks.OnCompleteListener}
         // to get the status that task is successful or not.
+        this.notifyListner = finishListener;
         isSignIn = true;
         Task<AuthResult> task = firebaseAuth.signInWithEmailAndPassword(userName, password);
         task.addOnCompleteListener(listener);
@@ -159,5 +178,12 @@ public final class FirebaseManager {
         createTask.addOnCompleteListener(listener);
     }
 
-
+    /**
+     * Set Local database refrence here to store firebase data here.
+     *
+     * @param localDbManager instance of local db.
+     */
+    public void setLocalDb(final LocalDatabaseManager localDbManager) {
+        this.localDbManager = localDbManager;
+    }
 }

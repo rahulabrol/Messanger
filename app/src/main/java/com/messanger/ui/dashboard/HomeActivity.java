@@ -8,6 +8,11 @@ import com.messanger.base.BaseActivity;
 
 /**
  * Created by Rahul Abrol on 11/24/17.
+ * Class @{@link HomeActivity} used to hold three fragments are:-
+ * <p>
+ * i) @{@link RecentFragments} used to holds the recent chat od users.
+ * ii) @{@link CallsFragment} used to show the list of dialed calls.
+ * iii) @{@link FriendsFragents} used to show list of all the friends.
  */
 
 public class HomeActivity extends BaseActivity {
