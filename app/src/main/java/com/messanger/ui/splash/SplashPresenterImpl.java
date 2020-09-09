@@ -35,21 +35,22 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
                            final LocalDatabaseManager localDbManager) {
         // handler to hold the screen to
         // show banding of the product.
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (view != null) {
-                    view.showLoading();
-                }
-                splashInteractor.login(localDbManager, userName,
-                        password, SplashPresenterImpl.this);
+        new Handler().postDelayed(() -> {
+            if (view != null) {
+                view.showLoading();
             }
+            splashInteractor.login(localDbManager, userName, password, SplashPresenterImpl.this);
         }, milliSec);
     }
 
     @Override
     public void createUser(String email, String name, LocalDatabaseManager localDbManager) {
         splashInteractor.createUser(localDbManager, email, name, SplashPresenterImpl.this);
+    }
+
+    @Override
+    public void initializeFirebase() {
+        view.initializeFirebase();
     }
 
     @Override

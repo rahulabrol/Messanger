@@ -1,4 +1,4 @@
-package com.messanger.base;
+package com.messanger.ui.base;
 
 /**
  * Created by Rahul Abrol on 11/24/17.

@@ -1,7 +1,7 @@
 package com.messanger.ui.splash;
 
-import com.messanger.base.MvpPresenter;
 import com.messanger.database.LocalDatabaseManager;
+import com.messanger.ui.base.MvpPresenter;
 
 /**
  * Created by Rahul Abrol on 11/24/17.
@@ -44,6 +44,8 @@ public interface SplashPresenter {
      */
     interface SplashView extends MvpPresenter {
         void switchToLogin();
+
+        void initializeFirebase();
 
         // void getFirebaseTaskResult(Task<AuthResult> authResultTask, OnCompleteListener<AuthResult> listener);
     }

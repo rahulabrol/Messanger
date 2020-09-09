@@ -26,6 +26,7 @@ public class SplashInteractorImpl implements SplashInteractor {
     @Override
     public void login(final LocalDatabaseManager localDbManager, final String username, final String password, final OnLoginFinishedListener listener) {
         if (firebaseManager != null) {
+            listener.initializeFirebase();
             // Initialize the firebase authorization.
             firebaseManager.getFirebaseAuth();
             // Check the user is exists.

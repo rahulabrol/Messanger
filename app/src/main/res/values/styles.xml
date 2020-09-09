@@ -22,19 +22,19 @@
     </style>
 
     <style name="TextAppearance.Text.Regular" parent="android:TextAppearance">
-        <item name="fontPath">fonts/sans/SourceSansPro-Regular.ttf</item>
+        <item name="fontFamily">fonts/sans/SourceSansPro-Regular.ttf</item>
     </style>
 
     <style name="TextAppearance.Text.Bold" parent="android:TextAppearance">
-        <item name="fontPath">fonts/sans/SourceSansPro-Bold.ttf</item>
+        <item name="fontFamily">fonts/sans/SourceSansPro-Bold.ttf</item>
     </style>
 
     <style name="TextAppearance.Text.Light" parent="android:TextAppearance">
-        <item name="fontPath">fonts/sans/SourceSansPro-Light.ttf</item>
+        <item name="fontFamily">fonts/sans/SourceSansPro-Light.ttf</item>
     </style>
 
     <style name="TextAppearance.Text.Italic" parent="android:TextAppearance">
-        <item name="fontPath">fonts/sans/SourceSansPro-Italic.ttf</item>
+        <item name="fontFamily">fonts/sans/SourceSansPro-Italic.ttf</item>
     </style>
 
     <style name="TextStyle">

@@ -1,10 +1,12 @@
 package com.messanger.database;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -15,6 +17,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.messanger.datamodel.User;
 import com.messanger.ui.splash.SplashInteractor;
+
+import timber.log.Timber;
 
 import static com.messanger.utils.AppConstant.TABLE_USERS;
 
@@ -28,10 +32,11 @@ import static com.messanger.utils.AppConstant.TABLE_USERS;
 public final class FirebaseManager {
 
     private static final String TAG = FirebaseManager.class.getSimpleName();
+    private static FirebaseManager instance;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
     private boolean isSignIn;
-    private LocalDatabaseManager localDbManager;
+    private com.messanger.database.LocalDatabaseManager localDbManager;
     private SplashInteractor.OnLoginFinishedListener notifyListner;
     private OnCompleteListener<AuthResult> listener = new OnCompleteListener<AuthResult>() {
         @Override
@@ -51,7 +56,7 @@ public final class FirebaseManager {
                     }
                 }
             } else {
-                Log.e(TAG, "onComplete: -------ERROR-->" + task.getException().getMessage());
+                Timber.e("onComplete: -------ERROR-->%s", task.getException().getMessage());
                 if (notifyListner != null) {
                     notifyListner.onError(task.getException().getMessage());
                 }
@@ -71,7 +76,14 @@ public final class FirebaseManager {
      * @return instance of {@link FirebaseManager}.
      */
     public static FirebaseManager getInstance() {
-        return new FirebaseManager();
+        if (instance == null) {
+            synchronized (FirebaseManager.class) {
+                if (instance == null) {
+                    instance = new FirebaseManager();
+                }
+            }
+        }
+        return instance;
     }
 
     /**
@@ -92,25 +104,23 @@ public final class FirebaseManager {
         DatabaseReference ref = firebaseDatabase.getReference(TABLE_USERS);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(final DataSnapshot dataSnapshot) {
-                if (dataSnapshot != null) {
-                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        if (data != null) {
-                            Log.e(TAG, data.getValue() + " <<------->> " + data.getKey());
-                            // this is not a current loggedIn user Id then true else false.
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    if (data != null) {
+                        Log.e(TAG, data.getValue() + " <<------->> " + data.getKey());
+                        // this is not a current loggedIn user Id then true else false.
 //                            if (!CommonData.getId().equals(data.getKey()) && localDbManager != null) {
-                            localDbManager.addUsers(data.getValue(User.class));
+                        localDbManager.addUsers(data.getValue(User.class));
 //                            }
-                        }
                     }
-                    if (notifyListner != null) {
-                        notifyListner.onSuccess();
-                    }
+                }
+                if (notifyListner != null) {
+                    notifyListner.onSuccess();
                 }
             }
 
             @Override
-            public void onCancelled(final DatabaseError databaseError) {
+            public void onCancelled(@NonNull final DatabaseError databaseError) {
                 databaseError.getMessage();
             }
         });
@@ -124,7 +134,6 @@ public final class FirebaseManager {
     public void getFirebaseAuth() {
         // @return instance of {@link FirebaseAuth}.
         firebaseAuth = FirebaseAuth.getInstance();
-//        return firebaseAuth;
     }
 
     /**
@@ -183,7 +192,7 @@ public final class FirebaseManager {
      *
      * @param localDbManager instance of local db.
      */
-    public void setLocalDb(final LocalDatabaseManager localDbManager) {
+    public void setLocalDb(final com.messanger.database.LocalDatabaseManager localDbManager) {
         this.localDbManager = localDbManager;
     }
 }

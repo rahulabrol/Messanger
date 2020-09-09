@@ -1,6 +1,4 @@
-package com.messanger.base;
-
-import android.support.annotation.StringRes;
+package com.messanger.ui.base;
 
 /**
  * Created by Rahul Abrol on 11/24/17.

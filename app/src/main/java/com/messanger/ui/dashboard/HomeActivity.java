@@ -1,10 +1,10 @@
 package com.messanger.ui.dashboard;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.messanger.R;
-import com.messanger.base.BaseActivity;
+import com.messanger.ui.base.BaseActivity;
 
 /**
  * Created by Rahul Abrol on 11/24/17.

@@ -17,6 +17,7 @@ public interface SplashInteractor {
 
     interface OnLoginFinishedListener {
         //void onTaskResult(Task<AuthResult> resultTask, OnCompleteListener<AuthResult> listener);
+        void initializeFirebase();
 
         void onError(String error);
 

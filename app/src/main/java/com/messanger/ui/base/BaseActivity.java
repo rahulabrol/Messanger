@@ -1,6 +1,6 @@
-package com.messanger.base;
+package com.messanger.ui.base;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import com.messanger.utils.AppConstant;
