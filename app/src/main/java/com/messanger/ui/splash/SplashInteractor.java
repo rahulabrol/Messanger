@@ -14,7 +14,7 @@ public interface SplashInteractor {
 
     void login(LocalDatabaseManager localDbManager, String username, String password, OnLoginFinishedListener listener);
 
-    void createUser(LocalDatabaseManager localDbManager, String email, String name, String password, OnLoginFinishedListener listener);
+    void createUser(LocalDatabaseManager localDbManager, String email, String password, OnLoginFinishedListener listener);
 
     boolean checkUserExist();
 

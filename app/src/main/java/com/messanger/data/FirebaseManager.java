@@ -1,4 +1,4 @@
-package com.messanger.database;
+package com.messanger.data;
 
 import android.util.Log;
 
@@ -14,7 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.messanger.data.database.LocalDatabaseManager;
-import com.messanger.datamodel.User;
+import com.messanger.data.model.User;
 import com.messanger.ui.base.OnResponseListener;
 
 import static com.messanger.utils.AppConstant.TABLE_USERS;

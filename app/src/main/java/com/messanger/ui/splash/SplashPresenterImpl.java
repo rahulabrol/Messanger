@@ -41,15 +41,18 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
             }
             if (splashInteractor.checkUserExist()) {
                 splashInteractor.login(localDbManager, userName, password, SplashPresenterImpl.this);
-            } else{
-
+            } else {
+                if (view != null) {
+                    view.hideLoading();
+                    view.showError("No user found");
+                }
             }
         }, milliSec);
     }
 
     @Override
-    public void createUser(String email, String name, String password, LocalDatabaseManager localDbManager) {
-        splashInteractor.createUser(localDbManager, email, name, password, SplashPresenterImpl.this);
+    public void createUser(String email, String password, LocalDatabaseManager localDbManager) {
+        splashInteractor.createUser(localDbManager, email, password, SplashPresenterImpl.this);
     }
 
     @Override

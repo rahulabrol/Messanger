@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.messanger.datamodel.Messages;
-import com.messanger.datamodel.User;
+import com.messanger.data.model.Messages;
+import com.messanger.data.model.User;
 
 import java.util.ArrayList;
 

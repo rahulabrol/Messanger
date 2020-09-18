@@ -2,7 +2,7 @@ package com.messanger.ui.splash;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.messanger.data.database.LocalDatabaseManager;
-import com.messanger.database.FirebaseManager;
+import com.messanger.data.FirebaseManager;
 
 /**
  * Created by Rahul Abrol on 11/27/17.
@@ -51,8 +51,7 @@ public class SplashInteractorImpl implements SplashInteractor {
     }
 
     @Override
-    public void createUser(LocalDatabaseManager localDbManager, String email,
-                           String name, String password, OnLoginFinishedListener listener) {
+    public void createUser(LocalDatabaseManager localDbManager, String email, String password, OnLoginFinishedListener listener) {
         firebaseManager.createUser(email, password, listener);
     }
 

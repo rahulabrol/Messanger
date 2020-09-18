@@ -29,11 +29,10 @@ public interface SplashPresenter {
      * Method used to create the new user with unique email and name.
      *
      * @param email          unique username.
-     * @param name           name of entered email.
      * @param password       password
      * @param localDbManager local database for locally save data.
      */
-    void createUser(String email, String name, String password, LocalDatabaseManager localDbManager);
+    void createUser(String email, String password, LocalDatabaseManager localDbManager);
 
     /**
      * Interface used to holds all the methods

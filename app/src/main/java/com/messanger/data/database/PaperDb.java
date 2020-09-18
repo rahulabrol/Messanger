@@ -1,4 +1,4 @@
-package com.messanger.database;
+package com.messanger.data.database;
 
 import com.messanger.utils.AppConstant;
 
