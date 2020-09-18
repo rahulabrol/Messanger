@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
 import com.messanger.R;
-import com.messanger.database.LocalDatabaseManager;
+import com.messanger.data.database.LocalDatabaseManager;
 import com.messanger.ui.base.BaseActivity;
 import com.messanger.ui.dashboard.HomeActivity;
 
@@ -33,9 +33,11 @@ public class SplashActivity extends BaseActivity implements SplashPresenter.Spla
 
         findViewById(R.id.tvAppName).setVisibility(View.VISIBLE);
         tvSignUp = findViewById(R.id.tvSignUp);
-        tvSignUp.setOnClickListener(this);
+        tvSignUp.setOnClickListener(view -> {
+            splashPresenter.createUser("rahulabrol2211@gmail.com", "Rahul Abrol","123456789", localDbManager);
+        });
 
-        localDbManager = LocalDatabaseManager.getInstance(this);
+        localDbManager = LocalDatabaseManager.getInstance();
 
         splashPresenter = new SplashPresenterImpl(this);
         // method called to halt the screen to show the branding of the application.
@@ -67,10 +69,5 @@ public class SplashActivity extends BaseActivity implements SplashPresenter.Spla
     public void showError(final String error) {
         tvSignUp.setVisibility(View.VISIBLE);
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onClick(View view) {
-        splashPresenter.createUser("rahulabrol2211@gmail.com", "Rahul Abrol", localDbManager);
     }
 }

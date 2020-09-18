@@ -1,7 +1,6 @@
-package com.messanger.database;
+package com.messanger.data.database;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -48,25 +47,31 @@ public class LocalDatabaseManager extends SQLiteOpenHelper {
     //USED AS PRIMARY KEY
     private static final String USER_ID = "user_id";
     private static final String MESSAGE_ID = "message_id";
-
+    private static LocalDatabaseManager localDatabaseManager;
 
     /**
      * Instantiates a new LocalDB handler.
-     *
-     * @param context the context
      */
-    private LocalDatabaseManager(final Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    private LocalDatabaseManager() {
+        /*TODO context cannot be null.*/
+        super(null, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     /**
      * get the instance of current class to access local db.
      *
-     * @param context context of calling class.
      * @return instance of local db.
      */
-    public static LocalDatabaseManager getInstance(final Context context) {
-        return new LocalDatabaseManager(context);
+    public static LocalDatabaseManager getInstance() {
+        /*TODO we don't required double locking here*/
+        if (localDatabaseManager == null) {
+            synchronized (LocalDatabaseManager.class) {
+                if (localDatabaseManager == null) {
+                    localDatabaseManager = new LocalDatabaseManager();
+                }
+            }
+        }
+        return localDatabaseManager;
     }
 
     @Override
@@ -92,9 +97,6 @@ public class LocalDatabaseManager extends SQLiteOpenHelper {
                 + " FOREIGN KEY (" + USER_ID + ") REFERENCES "
                 + TABLE_USERS + "(" + TOKEN + "));";
 
-
-        Log.e(TAG, "onCreate: -------->>" + createUsers);
-        Log.e(TAG, "onCreate: -------->>" + createMesseges);
         db.execSQL(createUsers);
         db.execSQL(createMesseges);
 

@@ -2,7 +2,7 @@ package com.messanger.ui.splash;
 
 import android.os.Handler;
 
-import com.messanger.database.LocalDatabaseManager;
+import com.messanger.data.database.LocalDatabaseManager;
 
 /**
  * Created by Rahul Abrol on 11/24/17.
@@ -39,13 +39,17 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
             if (view != null) {
                 view.showLoading();
             }
-            splashInteractor.login(localDbManager, userName, password, SplashPresenterImpl.this);
+            if (splashInteractor.checkUserExist()) {
+                splashInteractor.login(localDbManager, userName, password, SplashPresenterImpl.this);
+            } else{
+
+            }
         }, milliSec);
     }
 
     @Override
-    public void createUser(String email, String name, LocalDatabaseManager localDbManager) {
-        splashInteractor.createUser(localDbManager, email, name, SplashPresenterImpl.this);
+    public void createUser(String email, String name, String password, LocalDatabaseManager localDbManager) {
+        splashInteractor.createUser(localDbManager, email, name, password, SplashPresenterImpl.this);
     }
 
     @Override
@@ -64,12 +68,11 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
     }
 
     @Override
-    public void onSuccess() {
+    public void onSuccess(Object response) {
         if (view == null) {
             return;
         }
         view.hideLoading();
         view.switchToLogin();
-
     }
 }

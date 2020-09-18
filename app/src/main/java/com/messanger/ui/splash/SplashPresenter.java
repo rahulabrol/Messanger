@@ -1,6 +1,6 @@
 package com.messanger.ui.splash;
 
-import com.messanger.database.LocalDatabaseManager;
+import com.messanger.data.database.LocalDatabaseManager;
 import com.messanger.ui.base.MvpPresenter;
 
 /**
@@ -30,9 +30,10 @@ public interface SplashPresenter {
      *
      * @param email          unique username.
      * @param name           name of entered email.
+     * @param password       password
      * @param localDbManager local database for locally save data.
      */
-    void createUser(String email, String name, LocalDatabaseManager localDbManager);
+    void createUser(String email, String name, String password, LocalDatabaseManager localDbManager);
 
     /**
      * Interface used to holds all the methods

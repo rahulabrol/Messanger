@@ -79,6 +79,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycleVersion"
     implementation "androidx.room:room-runtime:$versions.roomVersion"
     implementation "androidx.room:room-ktx:$versions.roomVersion"
+    implementation 'com.google.firebase:firebase-auth:19.3.2'
     kapt "androidx.room:room-compiler:$versions.roomVersion"
     testImplementation "androidx.arch.core:core-testing:$versions.archCompomentVersion"
 
@@ -137,3 +138,4 @@ dependencies {
 }
 
 apply from: '../spotless.gradle'
+apply plugin: 'com.google.gms.google-services'

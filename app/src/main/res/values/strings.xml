@@ -4,4 +4,7 @@
     <string name="login">login</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="recent">Recent</string>
+    <string name="calls">Calls</string>
+    <string name="friends">Friends</string>
 </resources>

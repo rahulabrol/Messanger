@@ -1,6 +1,7 @@
 package com.messanger.ui.splash;
 
-import com.messanger.database.LocalDatabaseManager;
+import com.messanger.data.database.LocalDatabaseManager;
+import com.messanger.ui.base.OnResponseListener;
 
 /**
  * Created by Rahul Abrol on 11/27/17.
@@ -13,15 +14,13 @@ public interface SplashInteractor {
 
     void login(LocalDatabaseManager localDbManager, String username, String password, OnLoginFinishedListener listener);
 
-    void createUser(LocalDatabaseManager localDbManager, String email, String name, OnLoginFinishedListener listener);
+    void createUser(LocalDatabaseManager localDbManager, String email, String name, String password, OnLoginFinishedListener listener);
 
-    interface OnLoginFinishedListener {
+    boolean checkUserExist();
+
+    interface OnLoginFinishedListener extends OnResponseListener {
         //void onTaskResult(Task<AuthResult> resultTask, OnCompleteListener<AuthResult> listener);
         void initializeFirebase();
-
-        void onError(String error);
-
-        void onSuccess();
     }
 
 }
